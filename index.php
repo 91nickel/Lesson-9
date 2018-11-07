@@ -1,5 +1,6 @@
 <html>
 <head>
+    <meta charset="UTF-8">
     <style>
         input {
             display: inline-block;
@@ -43,29 +44,38 @@
 
         <?php
         // /*WHERE author LIKE "%$_GET['author']%"*/
-        $pdo = new pdo("mysql:host=localhost;dbname=global", "nkuznetsov ", "neto1907");
+        $pdo = new pdo("mysql:host=localhost;charset=utf8;dbname=global", "nkuznetsov", "neto1907");
         //$sql = 'SELECT * FROM books';
+        if(!isset($_GET['name'])) {
+            $_GET['name']='';
+        }
+        if(!isset($_GET['author'])) {
+            $_GET['author']='';
+        }
+        if(!isset($_GET['isbn'])) {
+            $_GET['isbn']='';
+        }
 
-        $sql = 'SELECT * FROM books WHERE name LIKE "%'. $_GET['name'].'%" AND author LIKE "%'.$_GET['author'].'%" AND isbn LIKE "%'.$_GET['isbn'].'%"';
+        $sql = 'SELECT * FROM books WHERE name LIKE "%' . $_GET['name'] . '%" AND author LIKE "%' . $_GET['author'] . '%" AND isbn LIKE "%' . $_GET['isbn'] . '%"';
+        echo '<br />';
         print_r($sql);
+        echo '<br />';
 
         //var_dump($sql);
         // print_r($_GET);
         //var_dump($_GET[0]);
 
-         foreach ($pdo->query($sql) as $row1) {
-             echo '<tr>';
-             echo '<td>' . $row1['name'] . '</td>';
-             echo '<td>' . $row1['author'] . '</td>';
-             echo '<td>' . $row1['year'] . '</td>';
-             echo '<td>' . $row1['genre'] . '</td>';
-             echo '<td>' . $row1['ISBN'] . '</td>';
-             echo '</tr>';
-         }
+        foreach ($pdo->query($sql) as $row1) {
+            echo '<tr>';
+            echo '<td>' . $row1['name'] . '</td>';
+            echo '<td>' . $row1['author'] . '</td>';
+            echo '<td>' . $row1['year'] . '</td>';
+            echo '<td>' . $row1['genre'] . '</td>';
+            echo '<td>' . $row1['isbn'] . '</td>';
+            echo '</tr>';
+        }
         ?>
     </table>
 </body>
 
 </html>
-
-
